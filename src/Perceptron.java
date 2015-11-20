@@ -29,8 +29,8 @@ public class Perceptron extends Classifier implements OptionHandler
 		data = new Instances(data);
 		data.deleteWithMissingClass();
 		
-		weights = new double[data.numAttributes() + 1];
-		for(int i = 0; i < data.numAttributes() + 1; ++i)
+		weights = new double[data.numAttributes()];
+		for(int i = 0; i < data.numAttributes(); ++i) //numAtributes should be +1 to include bias, -1 to account for the class. 
 		{
 			weights[i] = 0.5;
 		}
@@ -56,7 +56,7 @@ public class Perceptron extends Classifier implements OptionHandler
 					
 					weights[0] += pm * learnConst;
 					
-					for(int att = 1; att < inst.numAttributes(); ++att)
+					for(int att = 1; att < weights.length; ++att)
 					{
 						weights[att] += pm * learnConst * inst.value(att); 
 					}
@@ -64,8 +64,9 @@ public class Perceptron extends Classifier implements OptionHandler
 			}
 		}
 	}
-
-	public double[] distrubutionForInstance(Instance instance)
+	
+	@Override
+	public double[] distributionForInstance(Instance instance) throws Exception
 	{
         // The distributionForInstance() method will simply translate the two output classification
         // classes in the input data file (which may be letters or numbers) to the values zero and
