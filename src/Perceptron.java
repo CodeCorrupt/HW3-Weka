@@ -9,11 +9,16 @@ public class Perceptron extends Classifier implements OptionHandler,
 	public void buildClassifier(Instances data) throws Exception 
 	{
 		//TODO
+        // The buildClassifier() method will train the classifier using the Perceptron algorithm for
+        // the number of epochs, using the learning rate constant, and against the data set, all as
+        // specified by by the values retrieved by the setOptions method
 	}
 
 	public double[] distrubutionForInstance(Instance instance)
 	{
-		//TODO
+        // The distributionForInstance() method will simply translate the two output classification
+        // classes in the input data file (which may be letters or numbers) to the values zero and
+        // one, which are used by the Weka API methods to distinguish the classification classes.
 		double[] result = new double[2];
 		if (predict(instance) == 1) {
 			result[0] = 1;
@@ -28,7 +33,12 @@ public class Perceptron extends Classifier implements OptionHandler,
 	public void setOptions(String[] options) throws Exception
 	{
 		//TODO
-		
+		// The buildClassifier() method must report intermediate results as shown in the out-simple.txt
+        // file furnished with this assignment. Specifically, for each training epoch, the classifier
+        // must report the epoch number (e.g., “Iteration 0:”) followed by a binary string containing
+        // a value of 1 for each data instance that is successfully classified, or a value of 0 if
+        // classification is unsuccessful, requiring that the weights be updated.
+
 		//Use String Utils.getOption(options) to remove each option one at a time
 		//and do what you want with them.
 		
@@ -37,7 +47,22 @@ public class Perceptron extends Classifier implements OptionHandler,
 	
 	public String toString()
 	{
-		//TODO
-		return "Perceptron";
+        // The toString() method must report the following data in the format shown in the out-simple.txt
+        // sample output file: (a) the source file; (b) the number of iterations (epochs); (c) the
+        // learning rate used; (d) the total number of time that weight updates were performed during
+        // training; and (e) the final weight values.
+		String ret = "";
+		ret += "Source file: " + sourceFile;
+		ret += "\n";
+		ret += "\n";
+		ret += "Number of iterations: " + numIterations;
+		ret += "\n";
+		ret += "Learning rate: " + lernRate;
+		ret += "\n"
+		ret += "Total # weight updated:" + weightUpdates;
+		ret += "\n"
+		ret += "\n"
+		ret += "Final weights: " + showWeights();
+		return ret;
 	}
 }
