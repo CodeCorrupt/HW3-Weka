@@ -30,38 +30,52 @@ public class Perceptron extends Classifier implements OptionHandler
 		data.deleteWithMissingClass();
 		
 		weights = new double[data.numAttributes()];
-		for(int i = 0; i < data.numAttributes(); ++i) //numAtributes should be +1 to include bias, -1 to account for the class. 
-		{
-			weights[i] = 0.5;
-		}
+//		for(int i = 0; i < data.numAttributes(); ++i) //numAtributes should be +1 to include bias, -1 to account for the class. 
+//		{
+//			weights[i] = 0.5;
+//		}
+		weights[1] = -2.68;
+		weights[2] = 0.17;
+		weights[0] = 8.29;
 		
 		for(int epoch = 0; epoch < numEpochs; ++epoch)
 		{
+			System.out.printf("Iteration %d: ", epoch);
+			
 			for(int i = 0; i < data.numInstances(); ++i)
 			{
 				Instance inst = data.instance(i);
 				double est = predict(inst);
-				if(est != inst.classValue())
+				double act = inst.classValue();
+				if(est != act)
 				{
+					System.out.printf("0");
 					double pm = 0;
 					
-					if(inst.classValue() < 0 && est > 0)
+					if(inst.classValue() == 0 && est == 1)
 					{
-						pm = -2;
+						pm = -1;
 					}
-					else if(inst.classValue() > 0 && est < 0)
+					else if(inst.classValue() == 1 && est == 0)
 					{
-						pm = 2;
+						pm = 1;
 					}
 					
 					weights[0] += pm * learnConst;
+					weightUpdates++;
 					
 					for(int att = 1; att < weights.length; ++att)
 					{
-						weights[att] += pm * learnConst * inst.value(att); 
+						weights[att] += pm * learnConst * inst.value(att);
 					}
 				}
+				else
+				{
+					System.out.printf("1");
+				}
 			}
+
+			System.out.printf("\n");
 		}
 	}
 	
@@ -132,7 +146,7 @@ public class Perceptron extends Classifier implements OptionHandler
 		ret += "\n";
 		ret += "Final weights: ";
 		ret += "\n";
-		ret += "\t" + showWeights();
+		ret += showWeights();
 		return ret;
 	}
 	
@@ -140,8 +154,8 @@ public class Perceptron extends Classifier implements OptionHandler
 	{
 		String ret = "";
 		
-		ret += "Bias: " + weights[0];
-		ret += "Input Weights: ";
+		ret += "\tBias Weight: " + weights[0] + "\n";
+		ret += "\tInput Weights: ";
 		for(int i = 1; i < weights.length; ++i)
 		{
 			ret += weights[i] + " ";
@@ -157,9 +171,8 @@ public class Perceptron extends Classifier implements OptionHandler
 		sum += BIAS * weights[i++];
 		for (; i<weights.length; i++)
 		{
-			
 			sum += weights[i] * inst.value(i-1);
 		}
-		return (sum >= THRESHOLD) ? 1 : -1;
+		return (sum >= THRESHOLD) ? 0 : 1;
 	}
 }
