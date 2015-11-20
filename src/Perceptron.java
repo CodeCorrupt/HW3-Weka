@@ -133,6 +133,20 @@ public class Perceptron extends Classifier implements OptionHandler
 		return ret;
 	}
 	
+	private String showWeights()
+	{
+		String ret = "";
+		
+		ret += "Bias: " + weights[0];
+		ret += "Input Weights: ";
+		for(int i = 1; i < weights.length; ++i)
+		{
+			ret += weights[i] + " ";
+		}
+		
+		return ret;
+	}
+	
 	private float predict(Instance inst)
 	{
 		//TODO
