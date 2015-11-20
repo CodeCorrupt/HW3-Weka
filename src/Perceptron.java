@@ -11,6 +11,9 @@ public class Perceptron extends Classifier implements OptionHandler
 	int numEpochs = 0;
 	double learnConst = 0;
 	
+	int weightUpdates = 0;
+	double weights[] = null;
+	
 	@Override
 	public void buildClassifier(Instances data) throws Exception 
 	{
@@ -18,6 +21,29 @@ public class Perceptron extends Classifier implements OptionHandler
         // The buildClassifier() method will train the classifier using the Perceptron algorithm for
         // the number of epochs, using the learning rate constant, and against the data set, all as
         // specified by by the values retrieved by the setOptions method
+		
+		getCapabilities().testWithFail(data);
+		
+		data = new Instances(data);
+		data.deleteWithMissingClass();
+		
+		weights = new double[data.numAttributes() + 1];
+		for(int i = 0; i < data.numAttributes() + 1; ++i)
+		{
+			weights[i] = 0.5;
+		}
+		
+		for(int epoch = 0; epoch < numEpochs; ++epoch)
+		{
+			for(int i = 0; i < data.numInstances(); ++i)
+			{
+				Instance inst = data.instance(i);
+				if(predict(inst) != inst.classValue())
+				{
+					
+				}
+			}
+		}
 	}
 
 	public double[] distrubutionForInstance(Instance instance)
@@ -88,5 +114,11 @@ public class Perceptron extends Classifier implements OptionHandler
 		ret += "\n";
 		ret += "\t" + showWeights();
 		return ret;
+	}
+	
+	private float predict(Instance inst)
+	{
+		//TODO
+		return 0f;
 	}
 }
