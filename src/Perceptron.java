@@ -38,9 +38,26 @@ public class Perceptron extends Classifier implements OptionHandler
 			for(int i = 0; i < data.numInstances(); ++i)
 			{
 				Instance inst = data.instance(i);
-				if(predict(inst) != inst.classValue())
+				double est = predict(inst);
+				if(est != inst.classValue())
 				{
+					double pm = 0;
 					
+					if(inst.classValue() < 0 && est > 0)
+					{
+						pm = -2;
+					}
+					else if(inst.classValue() > 0 && est < 0)
+					{
+						pm = 2;
+					}
+					
+					weights[0] += pm * learnConst;
+					
+					for(int att = 1; att < inst.numAttributes(); ++att)
+					{
+						weights[att] += pm * learnConst * inst.value(att); 
+					}
 				}
 			}
 		}
