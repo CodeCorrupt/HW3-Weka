@@ -67,10 +67,13 @@ public class SimpleWeka
 		
 		// Set the classifier options
 		String[] options = new String[6];
+		// F = input file (string)
 		options[0] = "-F";
 		options[1] = args[0];
+		// I = number of training epochs (int)
 		options[2] = "-I";
 		options[3] = args[1];
+		// L = learning constant (decimal value)
 		options[4] = "-L";
 		options[5] = args[2];
 		model.setOptions(options);

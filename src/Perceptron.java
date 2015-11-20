@@ -2,9 +2,15 @@ import weka.classifiers.Classifier;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.OptionHandler;
+import weka.core.Utils;
 
-public class Perceptron extends Classifier implements OptionHandler, 
+public class Perceptron extends Classifier implements OptionHandler
 {
+	
+	String inFile = null;
+	int numEpochs = 0;
+	double learnConst = 0;
+	
 	@Override
 	public void buildClassifier(Instances data) throws Exception 
 	{
@@ -41,6 +47,29 @@ public class Perceptron extends Classifier implements OptionHandler,
 
 		//Use String Utils.getOption(options) to remove each option one at a time
 		//and do what you want with them.
+		
+		// F = input file (string)
+		String argString = "";
+		argString = Utils.getOption('F', options);
+	    if (argString.length() != 0) {
+	    	inFile = argString;
+	    } else {
+	    	inFile = null;
+	    }
+	    // I = number of training epochs (int)
+	    argString = Utils.getOption('I', options);
+	    if (argString.length() != 0) {
+	    	numEpochs = Integer.parseInt(argString);
+	    } else {
+	    	numEpochs = 1;
+	    }
+		// L = learning constant (decimal value)
+	    argString = Utils.getOption('L', options);
+	    if (argString.length() != 0) {
+	    	learnConst = (new Double(argString)).doubleValue();
+	    } else {
+	    	learnConst = 1.0;
+	    }
 		
 		super.setOptions(options);
 	}
