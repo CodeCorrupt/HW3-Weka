@@ -6,6 +6,8 @@ import weka.core.Utils;
 
 public class Perceptron extends Classifier implements OptionHandler
 {
+	final int BIAS = 1;
+	final double THRESHOLD = 0;
 	
 	String inFile = null;
 	int numEpochs = 0;
@@ -147,9 +149,16 @@ public class Perceptron extends Classifier implements OptionHandler
 		return ret;
 	}
 	
-	private float predict(Instance inst)
+	private double predict(Instance inst)
 	{
-		//TODO
-		return 0f;
+		double sum = 0;
+		int i = 0;
+		sum += BIAS * weights[i++];
+		for (; i<weights.length; i++)
+		{
+			
+			sum += weights[i] * inst.value(i-1);
+		}
+		return (sum >= THRESHOLD) ? 1 : -1;
 	}
 }
