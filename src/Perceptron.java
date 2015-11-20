@@ -3,7 +3,7 @@ import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.OptionHandler;
 
-public class Perceptron extends Classifier implements OptionHandler 
+public class Perceptron extends Classifier implements OptionHandler, 
 {
 	@Override
 	public void buildClassifier(Instances data) throws Exception 
