@@ -38,15 +38,8 @@ public class Perceptron extends Classifier implements OptionHandler
 	
 	public void setOptions(String[] options) throws Exception
 	{
-		//TODO
-		// The buildClassifier() method must report intermediate results as shown in the out-simple.txt
-        // file furnished with this assignment. Specifically, for each training epoch, the classifier
-        // must report the epoch number (e.g., “Iteration 0:”) followed by a binary string containing
-        // a value of 1 for each data instance that is successfully classified, or a value of 0 if
-        // classification is unsuccessful, requiring that the weights be updated.
-
-		//Use String Utils.getOption(options) to remove each option one at a time
-		//and do what you want with them.
+		// Use String Utils.getOption(options) to remove each option one at a time
+		// After removed custom args. pass the remaining into super class to handle
 		
 		// F = input file (string)
 		String argString = "";
