@@ -14,8 +14,15 @@ public class Perceptron extends Classifier implements OptionHandler
 	public double[] distrubutionForInstance(Instance instance)
 	{
 		//TODO
-		
-		return null;
+		double[] result = new double[2];
+		if (predict(instance) == 1) {
+			result[0] = 1;
+			result[1] = 0;
+		} else {
+			result[0] = 0;
+			result[1] = 1;
+		}		
+		return result;
 	}
 	
 	public void setOptions(String[] options) throws Exception
