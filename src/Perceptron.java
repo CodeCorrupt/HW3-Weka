@@ -13,7 +13,6 @@ public class Perceptron extends Classifier implements OptionHandler
 
 	public double[] distrubutionForInstance(Instance instance)
 	{
-		//TODO
 		double[] result = new double[2];
 		if (predict(instance) == 1) {
 			result[0] = 1;
@@ -37,7 +36,18 @@ public class Perceptron extends Classifier implements OptionHandler
 	
 	public String toString()
 	{
-		//TODO
-		return "Perceptron";
+		String ret = "";
+		ret += "Source file: " + sourceFile;
+		ret += "\n";
+		ret += "\n";
+		ret += "Number of iterations: " + numIterations;
+		ret += "\n";
+		ret += "Learning rate: " + lernRate;
+		ret += "\n"
+		ret += "Total # weight updated:" + weightUpdates;
+		ret += "\n"
+		ret += "\n"
+		ret += "Final weights: " + showWeights();
+		return ret;
 	}
 }
