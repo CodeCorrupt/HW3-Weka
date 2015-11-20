@@ -74,17 +74,19 @@ public class Perceptron extends Classifier implements OptionHandler
         // learning rate used; (d) the total number of time that weight updates were performed during
         // training; and (e) the final weight values.
 		String ret = "";
-		ret += "Source file: " + sourceFile;
+		ret += "Source file: " + inFile;
 		ret += "\n";
 		ret += "\n";
-		ret += "Number of iterations: " + numIterations;
+		ret += "Number of iterations: " + numEpochs;
 		ret += "\n";
-		ret += "Learning rate: " + lernRate;
-		ret += "\n"
-		ret += "Total # weight updated:" + weightUpdates;
-		ret += "\n"
-		ret += "\n"
-		ret += "Final weights: " + showWeights();
+		ret += "Learning rate: " + learnConst;
+		ret += "\n";
+		ret += "Total # weight updates:" + weightUpdates;
+		ret += "\n";
+		ret += "\n";
+		ret += "Final weights: ";
+		ret += "\n";
+		ret += "\t" + showWeights();
 		return ret;
 	}
 }
