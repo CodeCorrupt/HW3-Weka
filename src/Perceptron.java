@@ -30,7 +30,6 @@ public class Perceptron extends Classifier implements OptionHandler
 	@Override
 	public void buildClassifier(Instances data) throws Exception 
 	{
-		//TODO
         // The buildClassifier() method will train the classifier using the Perceptron algorithm for
         // the number of epochs, using the learning rate constant, and against the data set, all as
         // specified by by the values retrieved by the setOptions method
@@ -43,50 +42,48 @@ public class Perceptron extends Classifier implements OptionHandler
 		weights = new double[data.numAttributes()];
 		for(int i = 0; i < data.numAttributes(); ++i) //numAtributes should be +1 to include bias, -1 to account for the class. 
 		{
-			/*Weights theoretically (and shown in practice) can be initialized to random values,
-			 * we chose to use 0.0 for consistent results. 
-			 */
+		    // Weights theoretically (and shown in practice) can be initialized to random values,
+			// we chose to use 0.0 for consistent results. 
 			weights[i] = 0.0;
 		}
 
-		for(int epoch = 0; epoch < numEpochs; ++epoch)
+		for(int epoch = 0; epoch < numEpochs; ++epoch) //For each epoch
 		{
 			System.out.printf("Iteration %d: ", epoch);
 			
-			for(int i = 0; i < data.numInstances(); ++i)
+			for(int i = 0; i < data.numInstances(); ++i) // Itterate over each instance
 			{
 				Instance inst = data.instance(i);
-				double est = predict(inst);
-				double act = inst.classValue() * 2 - 1;
-				if(est != act)
+				double est = predict(inst);              // Perdict the output using current weights
+				double act = inst.classValue() * 2 - 1; // Convert the actual 0 or 1 into -1 or 1
+				if(est != act)                          // If predicted is not actual
 				{
-					System.out.printf("0");
+					System.out.printf("0");             // print a 0
 					double pm = 0;
 					
-					if(act == -1 && est == 1)
+					if(act == -1 && est == 1)           // If estemate was too high
 					{
-						pm = -2;
+						pm = -2;                        // Adjust weight down
 					}
-					else if(act == 1 && est == -1)
+					else if(act == 1 && est == -1)      // If estemate is low
 					{
-						pm = 2;
+						pm = 2;                         // Adjust weight up
 					}
 					
-					weights[0] += pm * learnConst;
-					weightUpdates++;
-					
+					weights[0] += pm * learnConst;      // Math to adjust Bias weight
 					for(int att = 1; att < weights.length; ++att)
 					{
-						weights[att] += pm * learnConst * inst.value(att - 1);
+						weights[att] += pm * learnConst * inst.value(att - 1); // Peceptron math
 					}
+					weightUpdates++;                    // count times we updated weights
 				}
 				else
 				{
-					System.out.printf("1");
+					System.out.printf("1");             // If we predicted right print a 1
 				}
 			}
 
-			System.out.printf("\n");
+			System.out.printf("\n");                    // new line for fomatting
 		}
 	}
 	
@@ -179,11 +176,11 @@ public class Perceptron extends Classifier implements OptionHandler
 	{
 		double sum = 0;
 		int i = 0;
-		sum += BIAS * weights[i++];
+		sum += BIAS * weights[i++];             // Add bias and weight to sum
 		for (; i<weights.length; i++)
 		{
-			sum += weights[i] * inst.value(i-1);
+			sum += weights[i] * inst.value(i-1);// Add the rest of weighted elements to su
 		}
-		return (sum >= THRESHOLD) ? 1 : -1;
+		return (sum >= THRESHOLD) ? 1 : -1;     // If the sum is over the threshold (0) return 1 else -1
 	}
 }
