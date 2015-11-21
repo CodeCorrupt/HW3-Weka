@@ -1,3 +1,14 @@
+/*
+ * CAP 4630 - Fall 2015
+ * 11/20/2015
+ * Brian Boudreaux
+ * Tyler Hoyt
+ * 
+ * Programming Assignment 3
+ * 
+ * This is our Simple Perceptron for Weka. 
+ */
+
 import weka.classifiers.Classifier;
 import weka.core.Instance;
 import weka.core.Instances;
@@ -30,14 +41,14 @@ public class Perceptron extends Classifier implements OptionHandler
 		data.deleteWithMissingClass();
 		
 		weights = new double[data.numAttributes()];
-//		for(int i = 0; i < data.numAttributes(); ++i) //numAtributes should be +1 to include bias, -1 to account for the class. 
-//		{
-//			weights[i] = 0.5;
-//		}
-		weights[1] = -2.68;
-		weights[2] = 0.17;
-		weights[0] = 8.29;
-		
+		for(int i = 0; i < data.numAttributes(); ++i) //numAtributes should be +1 to include bias, -1 to account for the class. 
+		{
+			/*Weights theoretically (and shown in practice) can be initialized to random values,
+			 * we chose to use 0.0 for consistent results. 
+			 */
+			weights[i] = 0.0;
+		}
+
 		for(int epoch = 0; epoch < numEpochs; ++epoch)
 		{
 			System.out.printf("Iteration %d: ", epoch);
@@ -46,19 +57,19 @@ public class Perceptron extends Classifier implements OptionHandler
 			{
 				Instance inst = data.instance(i);
 				double est = predict(inst);
-				double act = inst.classValue();
+				double act = inst.classValue() * 2 - 1;
 				if(est != act)
 				{
 					System.out.printf("0");
 					double pm = 0;
 					
-					if(inst.classValue() == 0 && est == 1)
+					if(act == -1 && est == 1)
 					{
-						pm = -1;
+						pm = -2;
 					}
-					else if(inst.classValue() == 1 && est == 0)
+					else if(act == 1 && est == -1)
 					{
-						pm = 1;
+						pm = 2;
 					}
 					
 					weights[0] += pm * learnConst;
@@ -66,7 +77,7 @@ public class Perceptron extends Classifier implements OptionHandler
 					
 					for(int att = 1; att < weights.length; ++att)
 					{
-						weights[att] += pm * learnConst * inst.value(att);
+						weights[att] += pm * learnConst * inst.value(att - 1);
 					}
 				}
 				else
@@ -87,11 +98,11 @@ public class Perceptron extends Classifier implements OptionHandler
         // one, which are used by the Weka API methods to distinguish the classification classes.
 		double[] result = new double[2];
 		if (predict(instance) == 1) {
-			result[0] = 1;
-			result[1] = 0;
-		} else {
 			result[0] = 0;
 			result[1] = 1;
+		} else {
+			result[0] = 1;
+			result[1] = 0;
 		}		
 		return result;
 	}
@@ -173,6 +184,6 @@ public class Perceptron extends Classifier implements OptionHandler
 		{
 			sum += weights[i] * inst.value(i-1);
 		}
-		return (sum >= THRESHOLD) ? 0 : 1;
+		return (sum >= THRESHOLD) ? 1 : -1;
 	}
 }
