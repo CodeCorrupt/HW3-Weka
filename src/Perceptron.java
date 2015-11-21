@@ -162,11 +162,11 @@ public class Perceptron extends Classifier implements OptionHandler
 	{
 		String ret = "";
 		
-		ret += "\tBias Weight: " + weights[0] + "\n";
-		ret += "\tInput Weights: ";
+		ret += String.format("Bias Weight:\n\t%.2f\n", weights[0]);
+		ret += "Input Weights:\n";
 		for(int i = 1; i < weights.length; ++i)
 		{
-			ret += weights[i] + " ";
+			ret += String.format("\t%.2f\n", weights[i]);
 		}
 		
 		return ret;
